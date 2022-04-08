@@ -1,31 +1,26 @@
 import { StyleSheet, Text, View } from 'react-native';
-import Block from './Block';
-
 
 
 export default function Modal() {
   return (
    
-        <Block style={styles.dashboard}>
-            <Block column style={{ marginVertical: theme.sizes.base * 2, }}>
-          <Text welcome>Hello</Text>
-          <Text name>John Doe</Text>
-        </Block>
-        </Block>
+    <View style={styles.blockcontainer}>
+    <Text>aaa</Text>
+  </View>
 
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+  blockcontainer: {
+    marginHorizontal: 2.5,
+    justifyContent: 'center', 
     alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 20 , 
+    backgroundColor: '#9FA8DA',
+    width:180,
+    height:120,
+    borderRadius:15
   },
-  dashboard: {
-    flex: 1,
-    padding: theme.sizes.base * 2,
-    marginBottom: -theme.sizes.base * 6,
-  },
+  
 });
