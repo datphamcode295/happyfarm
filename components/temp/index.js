@@ -1,18 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-// import Header from './components/header/header';
-import Header from './components/temp/index';
-// import Headerer from './components/header';
 
-
-export default function App() {
+export default function Header() {
   return (
     <View style={styles.container}>
-      <Header/>
-
       
+      <Icon name="bars" size={30} color="#1c1c1c"/>
       
     </View>
   );
