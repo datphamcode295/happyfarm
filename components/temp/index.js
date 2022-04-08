@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import UserAvatar from 'react-native-user-avatar'
 
 
 export default function Header() {
@@ -7,6 +8,7 @@ export default function Header() {
     <View style={styles.container}>
       
       <Icon name="bars" size={30} color="#1c1c1c"/>
+      <UserAvatar size={100} name="Avishay Bar" src="https://dummyimage.com/100x100/000/fff" />
       
     </View>
   );
