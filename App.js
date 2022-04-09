@@ -14,7 +14,7 @@ import TemperatureBox from './components/TemperatureBox';
 
 export default function App() {
   return (
-<View style={styles.container}>
+<View style={styles.container}> 
   <Header/>
       
    
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', 
     alignItems: 'center',
     width:370, 
-    backgroundColor: '#88B8DA',
+    // backgroundColor: '#88B8DA',
   },
   titleText: {
     fontSize: 40,

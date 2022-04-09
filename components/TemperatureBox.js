@@ -25,14 +25,14 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 70,
     fontWeight: "bold",
-    backgroundColor:"yellow",
+    // backgroundColor:"yellow",
     marginBottom:0,
     lineHeight:100
   },
   cText:{
     fontSize: 20,
     fontWeight: "bold",
-    backgroundColor:"pink",
+    // backgroundColor:"pink",
     lineHeight:60
   }
 });
