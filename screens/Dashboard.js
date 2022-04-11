@@ -6,6 +6,7 @@ import * as shape from 'd3-shape'
 import * as theme from '../theme';
 import { Block, Text } from '../components';
 import mocks from '../settings';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 class Dashboard extends Component {
   static navigationOptions = {
@@ -21,8 +22,9 @@ class Dashboard extends Component {
     const ElectricityIcon = settings['electricity'].icon;
 
     return (
-      <Block style={styles.dashboard}>
-        <Block column style={{ marginVertical: theme.sizes.base * 2, }}>
+      
+      <SafeAreaView style={styles.dashboard}>
+        <Block column >
           <Text welcome>Hello</Text>
           <Text name>Happy Farm</Text>
         </Block>
@@ -144,7 +146,7 @@ class Dashboard extends Component {
             </Block>
           </Block>
         </ScrollView>
-      </Block>
+      </SafeAreaView>
     )
   }
 }
@@ -160,6 +162,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: theme.sizes.base * 2,
     marginBottom: -theme.sizes.base * 6,
+    marginTop:-10
   },
   buttons: {
     flex: 1,
