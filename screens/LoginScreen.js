@@ -25,7 +25,7 @@ export default function LoginScreen({navigation})  {
     signInWithEmailAndPassword(auth, email, pass)
     .then((userCredential) => {
       console.log('Signed in!')
-      const user = userCredential.user;
+      // const user = userCredential.user;
       navigation.navigate('Home Page')
 
     //   console.log(user)

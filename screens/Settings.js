@@ -38,9 +38,13 @@ class Settings extends Component {
   }
 
   render() {
-    const { navigation, settings } = this.props;
+    const { route,navigation, settings } = this.props;
     // const name = this.props.navigation.getParam;
-    const Icon = settings[this.props.navigation.getParam].icon;
+    // const Icon = settings[navigation.getParam].icon;
+
+    // const name = navigation.getParam('name');
+    const name = route.params.name;
+    const Icon = settings[name].icon;
     
     return (
       <Block flex={1} style={styles.settings}>
