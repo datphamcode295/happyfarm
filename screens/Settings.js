@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, TouchableWithoutFeedback, Slider } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import ToggleSwitch from 'toggle-switch-react-native'
 
 import * as theme from '../theme';
 import { Block, Text, PanSlider } from '../components';
@@ -24,9 +25,12 @@ class Settings extends Component {
   state = {
     direction: 45,
     speed: 12,
+    toggleButton:false,
+
   }
 
   renderController() {
+    console.log(this.direction, this.speed, this.toggleButton)
     return (
       <Block flex={1} right style={styles.controller}>
         <Block center style={styles.controllerValue}>
@@ -83,6 +87,15 @@ class Settings extends Component {
               <Text welcome color="black">Speed</Text>
               <Text welcome color="black">{this.state.speed}</Text>
             </Block>
+            <ToggleSwitch
+              isOn={this.state.toggleButton}
+              onColor="green"
+              offColor="red"
+              label="Example label"
+              labelStyle={{ color: "black", fontWeight: "900" }}
+              size="large"
+              onToggle={isOn => this.setState({toggleButton:isOn}) }
+            />
             <Slider
               value={12}
               mininumValue={0}

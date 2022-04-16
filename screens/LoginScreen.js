@@ -117,6 +117,7 @@ export default function LoginScreen({navigation})  {
         />
 
         <TextInput 
+          secureTextEntry={true}
           onChangeText={onChangePass}
           value={pass}
           placeholder="Password"
