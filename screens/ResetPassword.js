@@ -12,7 +12,7 @@ const {width, height} =Dimensions.get('window')
 
 //https://www.youtube.com/watch?v=9pq9yR9nEqo
 
-export default function LoginScreen({navigation})  {
+export default function ResetScreen({navigation})  {
   const [email, onChangeEmail] = React.useState("");
   const [pass, onChangePass] = React.useState("");
 
@@ -21,40 +21,10 @@ export default function LoginScreen({navigation})  {
 
 
 
-  const handleSignIn = () => {
-    signInWithEmailAndPassword(auth, email, pass)
-    .then((userCredential) => {
-      console.log('Signed in!')
-      // const user = userCredential.user;
-      navigation.navigate('Home Page')
-
-    //   console.log(user)
-    
-    })
-    .catch(error => {
-      console.log(error)
-    })
-  }
-  const handleCreateAccount = () => {
-    createUserWithEmailAndPassword(auth, email, pass)
-    .then((userCredential) => {
-      console.log('Account created!')
-      const user = userCredential.user;
-      console.log(user)
-    })
-    .catch(error => {
-      console.log(error)
-      Alert.alert(error.message)
-    })
-  }
 
   const func = () => {
-    console.log(email + ' ' + pass)
-    onChangeEmail("")
-    onChangePass("")
-    handleSignIn()
+    navigation.navigate('Login')
   }
-
 
   function SvgTop() {
     return (
@@ -108,7 +78,7 @@ export default function LoginScreen({navigation})  {
         <SvgTop/>
       </View>
       <View style={styles.container}>
-        <Text style={styles.titulo}>HappyFarm</Text>
+        <Text style={styles.titulo}>Reset Password</Text>
         <TextInput 
           onChangeText={onChangeEmail}
           value={email}
@@ -116,30 +86,16 @@ export default function LoginScreen({navigation})  {
           style={styles.textInput}
         />
 
-        <TextInput 
-          onChangeText={onChangePass}
-          value={pass}
-          placeholder="Password"
-          style={styles.textInput}
-        />
-      <TouchableOpacity style={styles.forgotPassword}
-        onPress={()=>navigation.navigate('ResetPassword')}
-      >
-        <Text>Forgot your password?</Text>
-      </TouchableOpacity>
+        
+      
       <TouchableOpacity
     style={styles.button}
        onPress={func}
       >
-         <Text fontWeight='bold'>Login</Text>
-         </TouchableOpacity>
-        {/* <Text style={styles.forgotPassword}>Don't have an account?</Text> */}
-        <TouchableOpacity
-         onPress={handleCreateAccount}
-         style={styles.button}
-       >
-           <Text>Create Account</Text>
-       </TouchableOpacity>
+         <Text fontWeight='bold'>Send Email</Text>
+      </TouchableOpacity>
+        
+        
         <StatusBar style="auto" />
       </View>
     </SafeAreaView>
@@ -148,55 +104,56 @@ export default function LoginScreen({navigation})  {
 };
 
 const styles = StyleSheet.create({
-    mainContainer: {
-      backgroundColor: '#f1f1f1',
-      flex: 1,
-      padding:5,
-    },
-    container: {
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    containerSVG: {
-      width: width,
-      justifyContent: 'center',
-      alignItems: 'center',
-      flex:0.8,
-    },
-  
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        width: 250,
-        padding: 10,
-    },
-    button:{
-        alignItems: "center",
-        backgroundColor: "#83D475",
-        padding: 10,
-        width: 150,
-        marginTop:5,
-    },
-    titulo:{
-      fontSize: 40,
-      color: '#34434D',
-      fontWeight: 'bold',
-    },
-    textInput: {
-      borderWidth:1,
-      padding: 10,
-      paddingStart: 30,
-      width: '80%',
-      height: 50,
-      marginTop: 20,
-      borderRadius: 30,
-      backgroundColor: '#fff',
-    },
-    forgotPassword: {
-      fontSize: 14,
-      color: 'gray',
-      marginTop: 20
-    },
-});
+  mainContainer: {
+    backgroundColor: '#f1f1f1',
+    flex: 1,
+    padding:5,
+  },
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom:'20%'
 
+  },
+  containerSVG: {
+    width: width,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex:0.8,
+  },
+
+  input: {
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+      width: 250,
+      padding: 10,
+  },
+  button:{
+      alignItems: "center",
+      backgroundColor: "#83D475",
+      padding: 10,
+      width: 150,
+      marginTop:20,
+  },
+  titulo:{
+    fontSize: 40,
+    color: '#34434D',
+    fontWeight: 'bold',
+  },
+  textInput: {
+    borderWidth:1,
+    padding: 10,
+    paddingStart: 30,
+    width: '80%',
+    height: 50,
+    marginTop: 20,
+    borderRadius: 30,
+    backgroundColor: '#fff',
+  },
+  forgotPassword: {
+    fontSize: 14,
+    color: 'gray',
+    marginTop: 20
+  },
+});
