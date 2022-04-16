@@ -21,11 +21,11 @@ export default function App() {
       screenOptions={{
       headerShown: false
     }}>
-      <Stack.Screen name="Routine" component={RoutineScreen}/>
+     
       <Stack.Screen name="Home Page" component={Dashboard}/>
       <Stack.Screen name="Login" component={LoginScreen}/>
 
-
+      <Stack.Screen name="Routine" component={RoutineScreen}/>
       <Stack.Screen name="Settings" component={Settings}/>
       <Stack.Screen name="ResetPassword" component={ResetScreen}/>
       

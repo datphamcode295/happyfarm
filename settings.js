@@ -11,7 +11,62 @@ export default {
       <MaterialCommunityIcons
         size={size || theme.sizes.font}
         color={color || theme.colors.accent}
+        name="lightbulb-outline"
+        {...props}
+      />
+    ),
+  },
+  'lighton': {
+    name: 'Lighton',
+    icon: ({size, color, ...props}) => (
+      <MaterialCommunityIcons
+        size={size || theme.sizes.font}
+        color={color || theme.colors.accent}
         name="lightbulb-on-outline"
+        {...props}
+      />
+    ),
+  },
+  'pump': {
+    name: 'Pump',
+    icon: ({size, color, ...props}) => (
+      <MaterialCommunityIcons
+        size={size || theme.sizes.font}
+        color={color || theme.colors.accent}
+        name="water-pump"
+        {...props}
+      />
+    ),
+  },
+  'humidity': {
+    name: 'Humidity',
+    icon: ({size, color, ...props}) => (
+      <MaterialCommunityIcons
+        size={size || theme.sizes.font}
+        color={color || theme.colors.accent}
+        name="water"
+        {...props}
+      />
+    ),
+  },
+  'open': {
+    name: 'Door',
+    icon: ({size, color, ...props}) => (
+      <MaterialCommunityIcons
+        size={size || theme.sizes.font}
+        color={color || theme.colors.accent}
+        name="door-open"
+        {...props}
+      />
+    ),
+  },
+  'close': {
+    name: 'Close',
+    icon: ({size, color, ...props}) => (
+      <MaterialCommunityIcons
+        size={size || theme.sizes.font}
+        color={color || theme.colors.accent}
+        name="door-closed"
         {...props}
       />
     ),
