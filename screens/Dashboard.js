@@ -11,11 +11,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
-
 class Dashboard extends Component {
   static navigationOptions = {
     header: null
   }
+
 
   state = {
 
@@ -98,7 +98,8 @@ class Dashboard extends Component {
               
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('Settings', { name: 'temperature' })}
+                onPress={() => navigation.navigate('Testing')}
+                
               >
                 <Block style={styles.button}>
                 <ToggleSwitch style = {styles.left_footer} 
@@ -180,7 +181,7 @@ class Dashboard extends Component {
             <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
             <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('Settings', { name: 'temperature' })}
+                onPress={() => navigation.navigate('Temperature')}
               >
                 <Block center middle style={styles.button}>
                   <TempIcon size={38} />
@@ -194,7 +195,7 @@ class Dashboard extends Component {
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('Settings', { name: 'electricity' })}
+                onPress={() => navigation.navigate('Humidity')}
               >
                 <Block center middle style={styles.button}>
                   <HumidIcon size={38} />

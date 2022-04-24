@@ -9,6 +9,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ResetScreen from './screens/ResetPassword';
 import RoutineScreen from './screens/RoutineScreen';
+import Temperature from './screens/Temperature';
+import Humidity from './screens/Humidity';
+import Routine from './screens/Routine';
 
  
 const Stack = createNativeStackNavigator();
@@ -21,11 +24,14 @@ export default function App() {
       screenOptions={{
       headerShown: false
     }}>
-     
+      
+      <Stack.Screen name="Dashboard" component={Dashboard}/>
+      <Stack.Screen name="Routine" component={Routine}/>
       <Stack.Screen name="Home Page" component={Dashboard}/>
       <Stack.Screen name="Login" component={LoginScreen}/>
-
-      <Stack.Screen name="Routine" component={RoutineScreen}/>
+      <Stack.Screen name="Temperature" component={Temperature}/>
+      <Stack.Screen name="Humidity" component={Humidity}/>
+      {/* <Stack.Screen name="Routine" component={RoutineScreen}/> */}
       <Stack.Screen name="Settings" component={Settings}/>
       <Stack.Screen name="ResetPassword" component={ResetScreen}/>
       

@@ -8,19 +8,19 @@ import { Block, Text, PanSlider } from '../components';
 import mocks from '../settings';
 
 class Settings extends Component {
-  static navigationOptions = {
-    headerLeft: ({ onPress }) => (
-      <TouchableWithoutFeedback onPress={() => onPress()}>
-        <FontAwesome size={theme.sizes.font * 1.5} color={theme.colors.black} name="arrow-left" />
-      </TouchableWithoutFeedback>
-    ),
-    headerLeftContainerStyle: {
-      paddingLeft: theme.sizes.base * 2
-    },
-    headerStyle: {
-      borderBottomColor: 'transparent',
-    }
-  };
+  // static navigationOptions = {
+  //   headerLeft: ({ onPress }) => (
+  //     <TouchableWithoutFeedback onPress={() => onPress()}>
+  //       <FontAwesome size={theme.sizes.font * 1.5} color={theme.colors.black} name="arrow-left" />
+  //     </TouchableWithoutFeedback>
+  //   ),
+  //   headerLeftContainerStyle: {
+  //     paddingLeft: theme.sizes.base * 2
+  //   },
+  //   headerStyle: {
+  //     borderBottomColor: 'transparent',
+  //   }
+  // };
 
   state = {
     direction: 45,
