@@ -1,11 +1,10 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, TextInput, Button,TouchableOpacity, Text, View,Dimensions } from "react-native";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, sendPasswordResetEmail} from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from "../firebase-config";
 import {StatusBar} from 'expo-status-bar';
 import Svg, { Path, Defs, LinearGradient, Stop } from "react-native-svg";
-import ButtonGradient from './ButtonGradient';
 const {width, height} =Dimensions.get('window')
 
 
@@ -14,7 +13,7 @@ const {width, height} =Dimensions.get('window')
 
 export default function ResetScreen({navigation})  {
   const [email, onChangeEmail] = React.useState("");
-  const [pass, onChangePass] = React.useState("");
+
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -23,7 +22,18 @@ export default function ResetScreen({navigation})  {
 
 
   const func = () => {
-    navigation.navigate('Login')
+    sendPasswordResetEmail(auth,email)
+    .then((respone) => {
+
+      console.log(respone);
+      navigation.navigate('Login');
+
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
   }
 
   function SvgTop() {
