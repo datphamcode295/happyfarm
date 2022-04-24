@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, TextInput, Button,TouchableOpacity, Text, View,Dimensions } from "react-native";
+import { SafeAreaView, StyleSheet, TextInput, Button,TouchableOpacity, Text, Dimensions, Alert, Modal, Pressable, View } from "react-native";
 import { getAuth, sendPasswordResetEmail} from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from "../firebase-config";
@@ -13,7 +13,7 @@ const {width, height} =Dimensions.get('window')
 
 export default function ResetScreen({navigation})  {
   const [email, onChangeEmail] = React.useState("");
-
+  const [modalVisible, setModalVisible] = React.useState(false);
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -26,7 +26,8 @@ export default function ResetScreen({navigation})  {
     .then((respone) => {
 
       console.log(respone);
-      navigation.navigate('Login');
+      setModalVisible(true);
+      
 
     })
     .catch((error) => {
@@ -87,6 +88,30 @@ export default function ResetScreen({navigation})  {
       <View style={styles.containerSVG}>
         <SvgTop/>
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Bạn vui lòng kiểm tra email và nhập mật khẩu mới !!!</Text>
+            <Pressable
+              style={[styles.modalbutton, styles.buttonClose]}
+              onPress={() => {
+                setModalVisible(!modalVisible)
+                navigation.navigate('Login');
+              }}
+            >
+              <Text style={styles.textStyle}>Quay lại login</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.container}>
         <Text style={styles.titulo}>Reset Password</Text>
         <TextInput 
@@ -165,5 +190,48 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'gray',
     marginTop: 20
+  },centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 45,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  modalbutton: {
+    marginTop:5,
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#83D475",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    lineHeight:35,
+    marginBottom: 15,
+    textAlign: "center",
+    fontSize:30
   },
 });
