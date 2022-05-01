@@ -12,7 +12,10 @@ import RoutineScreen from './screens/RoutineScreen';
 import Temperature from './screens/Temperature';
 import Humidity from './screens/Humidity';
 import Routine from './screens/Routine';
-
+import Light from './screens/Light';
+import Testing from './screens/Testing';
+import Pump from './screens/Pump';
+import Fan from './screens/Fan';
  
 const Stack = createNativeStackNavigator();
 
@@ -25,8 +28,13 @@ export default function App() {
       headerShown: false
     }}>
       
+      
       <Stack.Screen name="Dashboard" component={Dashboard}/>
       <Stack.Screen name="Routine" component={Routine}/>
+      <Stack.Screen name="Light" component={Light}/>
+      <Stack.Screen name="Pump" component={Pump}/>
+      <Stack.Screen name="Fan" component={Fan}/>
+      <Stack.Screen name="Testing" component={Testing}/>
       <Stack.Screen name="Login" component={LoginScreen}/>
       <Stack.Screen name="Home Page" component={Dashboard}/>
       <Stack.Screen name="Temperature" component={Temperature}/>

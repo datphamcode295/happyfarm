@@ -8,7 +8,7 @@ export default function Routine(){
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
-    const [text, setText] = useState('Empty');
+    const [text, setText] = useState('');
     
     const onChange = (event, selectedDate) =>{
         const currentDate = selectedDate || date;
@@ -29,15 +29,18 @@ export default function Routine(){
 
     return (
         <View style={styles.container}>
-            <Text style = {{fontWeight:'bold',fontSize:20}}>{text}
+            <Text style = {{fontWeight:'bold',fontSize:14}}>{text}
                 
             </Text>
-            <View style={{margin:20}}>
+            <View row style={{ margin:10 }}>
                 <Button title ='DatePicker' onPress={()=> showMode('date')}/>
+                
             </View>
-            <View style={{margin:20}}>
+            <View row style={{ margin:10 }}>
+                
                 <Button title ='TimePicker' onPress={()=> showMode('time')}/>
             </View>
+            
 
             {show &&(
                 <DateTimePicker
@@ -62,11 +65,8 @@ export default function Routine(){
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        backgroundColor:'#fff',
+        // backgroundColor:'#fff',
         alignItems: 'center',
         justifyContent: 'center',
     }
-
-
-
 })

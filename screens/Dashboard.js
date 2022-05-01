@@ -72,7 +72,7 @@ class Dashboard extends Component {
             <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
             <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('Settings', { name: 'light' })}
+                onPress={() => navigation.navigate('Light')}
               >
                 <Block style={styles.button}>
                 <ToggleSwitch style = {styles.left_footer} 
@@ -98,7 +98,7 @@ class Dashboard extends Component {
               
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('Testing')}
+                onPress={() => navigation.navigate('Pump')}
                 
               >
                 <Block style={styles.button}>
@@ -145,9 +145,6 @@ class Dashboard extends Component {
                   {
                     this.state.doorButton?<OpenIcon size={38} style={styles.footer} />:<CloseIcon size={38} style={styles.footer} />
                   }
-                  
-              
-                  
               
                 </Block>
               </TouchableOpacity>
@@ -156,7 +153,7 @@ class Dashboard extends Component {
               <TouchableOpacity
     
     activeOpacity={0.8}
-                onPress={() => navigation.navigate('Settings', { name: 'ac' })}
+                onPress={() => navigation.navigate('Fan')}
               >
                 <Block style={styles.button}>
                 <ToggleSwitch style = {styles.left_footer} 
