@@ -12,6 +12,7 @@ export default function Routine(){
     
     const onChange = (event, selectedDate) =>{
         const currentDate = selectedDate || date;
+        setShow(Platform.OS ==='ios');
         setDate(currentDate);
 
         let tempDate = new Date(currentDate);
