@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
-import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { LineChart, Path } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
 import ToggleSwitch from 'toggle-switch-react-native'
-import * as theme from '../theme';
-import { Block, Text } from '../components';
-import mocks from '../settings';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import * as theme from '../theme'
+import { Block, Text } from '../components'
+import mocks from '../settings'
+import { SafeAreaView } from 'react-native-safe-area-context'
+// import fetch from "node-fetch"
+
 
 
 
@@ -23,6 +25,19 @@ class Dashboard extends Component {
     fanButton:false,
     pumpButton:false,
     doorButton: false,
+    uid:this.props.route.params.uid,
+    adaUsername:'',
+    adaPassword:'',
+  }
+  componentDidMount(){
+    const link = `http://10.0.2.2:8081/user?userid=${this.state.uid}`
+    fetch(link).then(res=>res.json())
+    .then(res=>{
+      // console.log(res)
+      this.setState({adaPassword:res.adaPassword, adaUsername:res.adaUsername})
+    })
+    .catch(console.log)
+    // https://617bd868d842cf001711c0fe.mockapi.io/item2
   }
 
   render() {
@@ -72,7 +87,8 @@ class Dashboard extends Component {
             <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
             <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('Light')}
+                onPress={() => {navigation.navigate('Light')
+                console.log(this.state.uid)}}
               >
                 <Block style={styles.button}>
                 <ToggleSwitch style = {styles.left_footer} 

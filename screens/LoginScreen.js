@@ -24,9 +24,9 @@ export default function LoginScreen({navigation})  {
   const handleSignIn = () => {
     signInWithEmailAndPassword(auth, email, pass)
     .then((userCredential) => {
-      console.log('Signed in!')
+      console.log('Signed in!',auth.currentUser.uid)
       // const user = userCredential.user;
-      navigation.navigate('Home Page')
+      navigation.navigate('Home Page',{ uid: auth.currentUser.uid })
 
     //   console.log(user)
     
