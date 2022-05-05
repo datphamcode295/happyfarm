@@ -43,9 +43,9 @@ class Pump extends Component {
             </Block>
             <Text caption>Pump</Text>
           </Block>
-          <Block flex={1.5} center>
+          {/* <Block flex={1.5} center>
             <PanSlider />
-          </Block>
+          </Block> */}
         </Block>
         <Block flex={1} style={{ paddingTop: theme.sizes.base * 2 }}>
         
