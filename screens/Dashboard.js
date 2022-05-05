@@ -40,6 +40,7 @@ class Dashboard extends Component {
     this.subscribeTopics = this.subscribeTopics.bind(this)
     this.onMessage = this.onMessage.bind(this)
     this.switchSetState = this.switchSetState.bind(this)
+    this.clickToggle = this.clickToggle.bind(this)
   }
 
 
@@ -61,15 +62,27 @@ class Dashboard extends Component {
     this.setState({fanButton:fanstatus=='ON'})
   }
 
+  clickToggle(link, status) {
+    // const link = `${this.state.adaUsername}/feeds/door`;
+    fetch(`https://io.adafruit.com/api/v2/${link}/data?X-AIO-Key=${this.state.adaPassword}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({datum:{value:status}})
+    }).then(res=>res.json())
+    // .then(console.log);
+    
+}
   subscribeTopics (client) {
     console.log(client)
-    client.subscribe("vandat2000/feeds/temp")
-    client.subscribe("vandat2000/feeds/light")
-    client.subscribe("vandat2000/feeds/pump")
-    client.subscribe("vandat2000/feeds/door")
-    client.subscribe("vandat2000/feeds/fan")
+    client.subscribe(`${this.state.adaUsername}/feeds/temp`)
+    client.subscribe(`${this.state.adaUsername}/feeds/light`)
+    client.subscribe(`${this.state.adaUsername}/feeds/pump`)
+    client.subscribe(`${this.state.adaUsername}/feeds/door`)
+    client.subscribe(`${this.state.adaUsername}/feeds/fan`)
     
-    // console.log("state : ", this)
   
     console.log("Subscribed to topics")
   }
@@ -78,25 +91,25 @@ class Dashboard extends Component {
 
   
     switch (message.destinationName) {
-        case "vandat2000/feeds/temp":
-          console.log("message : ", message)
-          console.log("message.payloadString : ", message.payloadString)
+        case `${this.state.adaUsername}/feeds/temp`:
+          console.log(`message : `, message)
+          console.log(`message.payloadString : `, message.payloadString)
           this.handletemp(parseFloat(message.payloadString))
           break
-        case "vandat2000/feeds/light":
+        case `${this.state.adaUsername}/feeds/light`:
           
           this.handlelight((message.payloadString))
           break
-        case "vandat2000/feeds/pump":
+        case `${this.state.adaUsername}/feeds/pump`:
 
           this.handlepump((message.payloadString))
           break
 
-        case "vandat2000/feeds/door":
+        case `${this.state.adaUsername}/feeds/door`:
 
           this.handledoor((message.payloadString))
           break
-        case "vandat2000/feeds/fan":
+        case `${this.state.adaUsername}/feeds/fan`:
           this.handlefan((message.payloadString))
           break
  
@@ -235,7 +248,9 @@ class Dashboard extends Component {
               offColor="#BEBEBE"
               labelStyle={{ color: "black", fontWeight: "900" }}
               size="large"
-              onToggle={isOn => this.setState({lightButton:isOn}) }
+              onToggle={isOn => {
+                this.clickToggle(`${this.state.adaUsername}/feeds/light`,isOn?'ON':'OFF')
+                this.setState({lightButton:isOn})} }
               />
                   <Text
                     button
@@ -262,7 +277,9 @@ class Dashboard extends Component {
               offColor="#BEBEBE"
               labelStyle={{ color: "black", fontWeight: "900" }}
               size="large"
-              onToggle={isOn => this.setState({pumpButton:isOn}) }
+              onToggle={isOn => {
+                this.clickToggle(`${this.state.adaUsername}/feeds/pump`,isOn?'ON':'OFF')
+                this.setState({pumpButton:isOn})} }
               />
                   <Text
                     button
@@ -287,7 +304,9 @@ class Dashboard extends Component {
               offColor="#BEBEBE"
               labelStyle={{ color: "black", fontWeight: "900" }}
               size="large"
-              onToggle={isOn => this.setState({doorButton:isOn}) }
+              onToggle={isOn => {
+                this.clickToggle(`${this.state.adaUsername}/feeds/door`,isOn?'ON':'OFF')
+                this.setState({doorButton:isOn})} }
               />
               
                 <Text
@@ -316,7 +335,9 @@ class Dashboard extends Component {
               offColor="#BEBEBE"
               labelStyle={{ color: "black", fontWeight: "900" }}
               size="large"
-              onToggle={isOn => this.setState({fanButton:isOn}) }
+            onToggle={isOn => {
+              this.clickToggle(`${this.state.adaUsername}/feeds/fan`,isOn?'ON':'OFF')
+              this.setState({fanButton:isOn})} }
               />
               
                   <Text
