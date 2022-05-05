@@ -30,10 +30,12 @@ class Dashboard extends Component {
       uid:'M1Apv3xeMsWWirqfUJ01GheeT142',
       adaUsername:'',
       adaPassword:'',
+      client:'',
     };
     this.handletemp = this.handletemp.bind(this)
     this.subscribeTopics = this.subscribeTopics.bind(this)
     this.onMessage = this.onMessage.bind(this)
+    this.switchSetState = this.switchSetState.bind(this)
   }
 
 
@@ -62,25 +64,76 @@ class Dashboard extends Component {
           // this.setState({temp:34})
     };
   }
+
+  switchSetState(topic, status){
+    switch (topic) {
+      case 'light':
+        this.setState({lightButton:status=='ON'})
+        break;
+      case 'pump':
+        this.setState({pumpButton:status=='ON'})
+        break;
+      case 'fan':
+        this.setState({fanButton:status=='ON'})
+        break; 
+      case 'door':
+        this.setState({doorButton:status=='ON'})
+        break;   
+      default:
+        break;
+    }
+  }
+  load(){
+    console.log("loading...")
+  }
   componentDidMount(){
- 
+    console.log("run componentDidMount")
 
     const link = `http://10.0.2.2:8081/user?userid=${this.state.uid}`
     fetch(link).then(res=>res.json())
     .then(res=>{
-      // console.log(res)
+      console.log("got mongodata")
       this.setState({adaPassword:res.adaPassword, adaUsername:res.adaUsername})
+    })
+    .then(res=>{
+      const listTopics = ['light', 'pump', 'fan', 'door']
+      for(let i =0; i< listTopics.length; i++){
+        const adalink = `https://io.adafruit.com/api/v2/${this.state.adaUsername}/feeds/${listTopics[i]}/data?X-AIO-Key=${this.state.adaPassword}`
+        fetch(adalink).then(res=>res.json())
+        .then(res=>{
+          console.log("got ada data")
+          console.log(res[0].value)
+          this.switchSetState(listTopics[i],res[0].value)
+        })
+        .catch(console.log)
+      }
     })
     .catch(console.log)
     // https://617bd868d842cf001711c0fe.mockapi.io/item2
 
     try{
-      mqtt_connect(this.onMessage, this.subscribeTopics)
+     this.setState({client:mqtt_connect(this.onMessage, this.subscribeTopics)}) 
+
     }
     catch(error){
-      console.log(error)
+      // console.log(error)
     }
+
+    this.props.navigation.addListener('willFocus', this.load)
+
   }
+  componentDidUpdate(){
+    console.log("runnging componentDidUpdate")
+  }
+
+  // componentWillUnmount(){
+  //   mqtt_disconnect(this.state.client)
+  //   console.log(this.state.client)
+  //   console.log("mqtt disconnecting")
+  // }
+  
+
+
 
   render() {
     const { navigation, settings } = this.props;
@@ -105,8 +158,8 @@ class Dashboard extends Component {
         </Block>
         
         <Block row style={{ paddingVertical: 10 }}>
-          <Block flex={1.5} row style={{ alignItems: 'flex-end', }}>
-            <Text h1>{this.state.temp}</Text>
+          <Block flex={1.5} row style={{ alignItems: 'flex-end',}}>
+            <Text h1 size={75} height={160} weight='600' spacing={0.01}>{this.state.temp}</Text>
             <Text h1 size={34} height={80} weight='600' spacing={0.1}>°C</Text>
           </Block>
           <Block flex={1} column>
@@ -180,10 +233,10 @@ class Dashboard extends Component {
             </Block>
 
             <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
-              {/* <TouchableOpacity
+              <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => navigation.navigate('Settings', { name: 'wi-fi' })}
-              > */}
+              >
                 <Block style={styles.button}>
                 <ToggleSwitch style = {styles.left_footer} 
               isOn={this.state.doorButton}
@@ -205,7 +258,7 @@ class Dashboard extends Component {
                   }
               
                 </Block>
-              {/* </TouchableOpacity> */}
+              </TouchableOpacity>
               
               
               <TouchableOpacity
