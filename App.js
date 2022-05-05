@@ -34,6 +34,7 @@ export default function App() {
       <Stack.Screen name="Light" component={Light}/>
       <Stack.Screen name="Pump" component={Pump}/>
       <Stack.Screen name="Fan" component={Fan}/>
+      <Stack.Screen name="RoutineScreen" component={RoutineScreen}/>
       <Stack.Screen name="Testing" component={Testing}/>
       <Stack.Screen name="Login" component={LoginScreen}/>
       <Stack.Screen name="Home Page" component={Dashboard}/>

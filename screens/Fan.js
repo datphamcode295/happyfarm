@@ -7,11 +7,11 @@ import { StatusBar } from "expo-status-bar";
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as theme from '../theme';
 import { Block, Text, PanSlider } from '../components';
 import mocks from '../settings';
-import Routine from './Routine';
+import RoutineScreen from './RoutineScreen';
 
 class Fan extends Component {
 
@@ -20,11 +20,9 @@ class Fan extends Component {
     // direction: 45,
     // speed: 12,
     toggleButton:false,
+    timeButton:false,
   
   }
-
-  
-          
   
   render() {
     const { route,navigation, settings } = this.props;
@@ -35,6 +33,7 @@ class Fan extends Component {
     
 
     return (
+      <SafeAreaView style={styles.dashboard}>
       <Block flex={1} style={styles.settings}>
         <Block flex={0.5} row style={{ alignItems: 'center',justifyContent: 'center', }}>
           <Block column style={{ alignItems: 'center',justifyContent: 'center', }}>
@@ -53,7 +52,7 @@ class Fan extends Component {
           <Block column style={{ marginVertical: theme.sizes.base * 3 }}>
             <Block row space="between">
               <Text welcome color="black" style={{margin:10,
-    fontWeight:'bold',fontSize: 23}}>Status</Text>
+              fontWeight:'bold',fontSize: 23}}>Status</Text>
               <ToggleSwitch style = {styles.left_footer} 
               isOn={this.state.toggleButton}
               onColor="#72cc50"
@@ -70,17 +69,33 @@ class Fan extends Component {
             <Block row space="between" alignItems='center'>
               <Text welcome color="black" style={{margin:10,
               fontWeight:'bold',fontSize: 23}}>Set time</Text>
-              
-              <Routine/>
+              <ToggleSwitch style = {styles.left_footer} 
+              isOn={this.state.timeButton}
+              onColor="#72cc50"
+              offColor="#BEBEBE"
+              labelStyle={{ color: "black", fontWeight: "900" }}
+              size="large"
+              onToggle={isOn => this.setState({timeButton:isOn}) }
+              />
             </Block>
-            
+           
           </Block>
+          
+            {
+             this.state.timeButton?
+             <Block flex={1} column >
+               <RoutineScreen/>
+               </Block>
+               :<></>
+              }
+
+      
         </Block>
 
 
         
       </Block>
-      
+      </SafeAreaView>
     )
   }
 }
@@ -92,10 +107,18 @@ Fan.defaultProps = {
 export default Fan;
 
 const styles = StyleSheet.create({
+  dashboard: {
+    flex: 1,
+    padding: theme.sizes.base,
+    marginBottom: -theme.sizes.base * 6,
+    marginTop:-10
+  },
   settings: {
     padding: theme.sizes.base * 2,
   },
   slider: {
+  },
+  settime:{
 
   }
 })

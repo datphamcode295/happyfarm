@@ -18,9 +18,10 @@ export default function Routine(){
         let tempDate = new Date(currentDate);
         let fDate  = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
         let fTime = 'Hours: ' + tempDate.getHours() + '|Minutes: ' + tempDate.getMinutes();
-        setText(fDate + '\n' + fTime)
-
-        console.log(fDate + '(' + fTime + ')')
+        // setText(fDate + '\n' + fTime)
+        setText(tempDate.getTime())
+        // console.log(fDate + '(' + fTime + ')')
+        // console.log(tempDate.getTime)
     }
     
     const showMode = (currentMode) => {

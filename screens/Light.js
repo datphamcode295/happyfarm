@@ -7,11 +7,11 @@ import { StatusBar } from "expo-status-bar";
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as theme from '../theme';
 import { Block, Text, PanSlider } from '../components';
 import mocks from '../settings';
-import Routine from './Routine';
+import RoutineScreen from './RoutineScreen';
 
 class Light extends Component {
 
@@ -20,28 +20,26 @@ class Light extends Component {
     // direction: 45,
     // speed: 12,
     toggleButton:false,
+    timeButton:false,
   
   }
-
-  
-          
   
   render() {
     const { route,navigation, settings } = this.props;
     
-    const name = 'Light';
-    const Icon = settings['light'].icon;
-    const LightOnIcon = settings['lighton'].icon;
+    
+    const LightIcon = settings['lighton'].icon;
 
     
 
     return (
+      <SafeAreaView style={styles.dashboard}>
       <Block flex={1} style={styles.settings}>
         <Block flex={0.5} row style={{ alignItems: 'center',justifyContent: 'center', }}>
           <Block column style={{ alignItems: 'center',justifyContent: 'center', }}>
             {/* <Icon size={theme.sizes.font * 4} color={theme.colors.gray2} /> */}
             <Block flex={1.5} row style={{ alignItems: 'center', justifyContent: 'center', }}>
-            <LightOnIcon size={100} />
+            <LightIcon size={100} />
             </Block>
             <Text caption>Light</Text>
           </Block>
@@ -54,7 +52,7 @@ class Light extends Component {
           <Block column style={{ marginVertical: theme.sizes.base * 3 }}>
             <Block row space="between">
               <Text welcome color="black" style={{margin:10,
-    fontWeight:'bold',fontSize: 23}}>Status</Text>
+              fontWeight:'bold',fontSize: 23}}>Status</Text>
               <ToggleSwitch style = {styles.left_footer} 
               isOn={this.state.toggleButton}
               onColor="#72cc50"
@@ -71,17 +69,33 @@ class Light extends Component {
             <Block row space="between" alignItems='center'>
               <Text welcome color="black" style={{margin:10,
               fontWeight:'bold',fontSize: 23}}>Set time</Text>
-              
-              <Routine/>
+              <ToggleSwitch style = {styles.left_footer} 
+              isOn={this.state.timeButton}
+              onColor="#72cc50"
+              offColor="#BEBEBE"
+              labelStyle={{ color: "black", fontWeight: "900" }}
+              size="large"
+              onToggle={isOn => this.setState({timeButton:isOn}) }
+              />
             </Block>
-            
+           
           </Block>
+          
+            {
+             this.state.timeButton?
+             <Block flex={1} column >
+               <RoutineScreen/>
+               </Block>
+               :<></>
+              }
+
+      
         </Block>
 
 
         
       </Block>
-      
+      </SafeAreaView>
     )
   }
 }
@@ -93,10 +107,18 @@ Light.defaultProps = {
 export default Light;
 
 const styles = StyleSheet.create({
+  dashboard: {
+    flex: 1,
+    padding: theme.sizes.base,
+    marginBottom: -theme.sizes.base * 6,
+    marginTop:-10
+  },
   settings: {
     padding: theme.sizes.base * 2,
   },
   slider: {
+  },
+  settime:{
 
   }
 })
