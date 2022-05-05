@@ -95,25 +95,15 @@ class Fan extends Component {
             <Block row space="between" alignItems='center'>
               <Text welcome color="black" style={{margin:10,
               fontWeight:'bold',fontSize: 23}}>Set time</Text>
-              <ToggleSwitch style = {styles.left_footer} 
-              isOn={this.state.timeButton}
-              onColor="#72cc50"
-              offColor="#BEBEBE"
-              labelStyle={{ color: "black", fontWeight: "900" }}
-              size="large"
-              onToggle={isOn => this.setState({timeButton:isOn}) }
-              />
             </Block>
            
           </Block>
           
-            {
-             this.state.timeButton?
+           
              <Block flex={1} column >
                <RoutineScreen/>
                </Block>
-               :<></>
-              }
+             
 
       
         </Block>
