@@ -139,8 +139,6 @@ const styles = StyleSheet.create({
     },
     inputWrap: {
       flex: 1,
-      borderColor: "#cccccc",
-      borderBottomWidth: 1,
       marginBottom: 10
     },
     inputdate: {

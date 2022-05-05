@@ -62,6 +62,7 @@ class Dashboard extends Component {
   }
 
   subscribeTopics (client) {
+    console.log(client)
     client.subscribe("vandat2000/feeds/temp")
     client.subscribe("vandat2000/feeds/light")
     client.subscribe("vandat2000/feeds/pump")

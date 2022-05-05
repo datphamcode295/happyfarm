@@ -36,7 +36,7 @@ export default function Humidity() {
   const [inputcvv, setInputcvv] = React.useState("")
 
   return (
-    <SafeAreaView style={styles.dashboard}>
+    <ScrollView style={styles.dashboard}>
         
         <Block style={styles.container}>
         <Text style={styles.headerText}> Humidity </Text>
@@ -102,7 +102,7 @@ export default function Humidity() {
     
 
       </Block>
-    </SafeAreaView>
+    </ScrollView>
    
   );
 }
@@ -116,8 +116,6 @@ const styles = StyleSheet.create({
   },
   inputWrap: {
     flex: 1,
-    borderColor: "#cccccc",
-    borderBottomWidth: 1,
     marginBottom: 10
   },
   inputdate: {
@@ -151,7 +149,8 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: theme.sizes.base,
         marginBottom: -theme.sizes.base * 4,
-        marginTop:-10
+        marginTop:-10,
+        marginBottom:5
       },
 
     header:{
