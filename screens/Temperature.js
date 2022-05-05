@@ -31,8 +31,14 @@ export default function Temperature() {
     
     useShadowColorFromDataset: false // optional
   };
+  //TextInput
+  // const [input, setInput] = React.useState("")
+  const [inputdate, setInputdate] = React.useState("")
+  const [inputcvv, setInputcvv] = React.useState("")
+  
 
   return (
+    
     <SafeAreaView style={styles.dashboard}>
         
         <Block style={styles.container}>
@@ -44,6 +50,7 @@ export default function Temperature() {
             <Text style={{ fontWeight: "bold",fontSize: 30, color: "#17921f"}}>°C</Text>
           </View>
         </Block>
+        
         <View > 
  
           <LineChart
@@ -58,6 +65,57 @@ export default function Temperature() {
           />
   
           </View>
+
+          {/* <TextInput style={styles.input} onChangeText = {(text) => setInput(text)}
+          onSubmitEditing ={() => {
+            // alert(`Your message is: ${input}`);
+            setInput("");
+          }}
+          value = {input}
+          placeholder = "Lower bound"
+          keyboardType = "decimal-pad"
+          keyboardAppearance = "light"
+          returnKeyType = "done"
+          /> */}
+
+      <View style={styles.row}>
+        <View style={styles.inputWrap}>
+          <Text style={styles.label} >Lower bound</Text>
+          <TextInput style={styles.inputdate} onChangeText = {(text) => setInputdate(text)}
+          onSubmitEditing ={() => {
+            alert(`Lower bound degree is: ${inputdate}`);
+            setInputdate("");
+          }}
+          valueLB = {inputdate}
+          clearButtonMode="always"
+          placeholder = "Input degree"
+          placeholderTextColor="rgba(0, 128, 0, 0.3)" 
+          keyboardType = "decimal-pad"
+          keyboardAppearance = "light"
+          returnKeyType = "done"
+          />
+          
+        </View>
+
+        <View style={styles.inputWrap}>
+          <Text style={styles.label}>Upper bound</Text>
+          <TextInput style={styles.inputcvv} maxLength={17} 
+          onChangeText = {(text) => setInputcvv(text)}
+          onSubmitEditing ={() => {
+            alert(`Upper bound degree is: ${inputcvv}`);
+            setInputcvv("");
+          }}
+          valueUB = {inputcvv}
+          clearButtonMode="always"
+          placeholder = "Input degree"
+          placeholderTextColor="rgba(0, 128, 0, 0.3)" 
+          keyboardType = "decimal-pad"
+          keyboardAppearance = "light"
+          returnKeyType = "done"
+          />
+        </View>
+      </View>
+    
       </Block>
     </SafeAreaView>
    
@@ -65,6 +123,54 @@ export default function Temperature() {
 }
 
 const styles = StyleSheet.create({
+    // input:{
+    //     width:110,
+    //     borderColor: 'gray',
+    //     borderWidth: 1,
+    //     borderRadius: 10,
+    //     padding: 10,
+    //     marginTop: 10
+    // },
+    row: {
+      flex: 1,
+      flexDirection: "row",
+      margin: 10,
+      marginLeft: 40
+    },
+    inputWrap: {
+      flex: 1,
+      borderColor: "#cccccc",
+      borderBottomWidth: 1,
+      marginBottom: 10
+    },
+    inputdate: {
+      fontSize: 14,
+      marginBottom: -12,
+      color: "#6a4595",
+      width:150,
+      borderColor: "#17921f",
+      borderWidth: 1,
+      borderRadius: 10,
+      padding: 10,
+      // marginTop: 10
+    },
+    inputcvv: {
+      fontSize: 14,
+      marginBottom: -12,
+      color: "#6a4595",
+      width:150,
+      borderColor: "#17921f",
+      borderWidth: 1,
+      borderRadius: 10,
+      padding: 10,
+      // marginTop: 10
+    },
+    label:{
+      fontWeight: "bold",
+      fontSize: 15, 
+      // color: "#17921f"
+    },
+
     dashboard: {
         flex: 1,
         padding: theme.sizes.base,
