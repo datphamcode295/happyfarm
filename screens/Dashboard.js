@@ -293,10 +293,7 @@ class Dashboard extends Component {
             </Block>
 
             <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => navigation.navigate('Settings', { name: 'wi-fi' })}
-              >
+              
                 <Block style={styles.button}>
                 <ToggleSwitch style = {styles.left_footer} 
               isOn={this.state.doorButton}
@@ -320,7 +317,7 @@ class Dashboard extends Component {
                   }
               
                 </Block>
-              </TouchableOpacity>
+              
               
               
               <TouchableOpacity
