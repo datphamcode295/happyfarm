@@ -112,17 +112,18 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     margin: 10,
-    marginLeft: 40
+    // marginLeft: 40
   },
   inputWrap: {
     flex: 1,
-    marginBottom: 10
+    marginBottom: 10,
+    alignItems: "center"
   },
   inputdate: {
     fontSize: 14,
     marginBottom: -12,
     color: "#6a4595",
-    width:150,
+    width:110,
     borderColor: "#17921f",
     borderWidth: 1,
     borderRadius: 10,
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: -12,
     color: "#6a4595",
-    width:150,
+    width:110,
     borderColor: "#17921f",
     borderWidth: 1,
     borderRadius: 10,
