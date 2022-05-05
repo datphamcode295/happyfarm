@@ -15,15 +15,44 @@ import RoutineScreen from './RoutineScreen';
 
 class Light extends Component {
 
-
-  state = {
-    // direction: 45,
-    // speed: 12,
-    toggleButton:false,
-    timeButton:false,
-  
+  constructor () {
+    super();
+    this.state = {
+      toggleButton:false,
+      timeButton:false,
+    };
+    this.clickToggle = this.clickToggle.bind(this)
   }
-  
+
+  clickToggle(status) {
+    fetch(`https://io.adafruit.com/api/v2/${this.props.route.params.username}/feeds/light/data?X-AIO-Key=${this.props.route.params.password}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({datum:{value:status}})
+    }).then(res=>res.json())
+    // .then(console.log);  
+  }
+  componentDidMount(){
+    const adalink = `https://io.adafruit.com/api/v2/${this.props.route.params.username}/feeds/light/data?X-AIO-Key=${this.props.route.params.password}`
+    // console.log(this.props.route)
+    fetch(adalink).then(res=>res.json())
+        .then(res=>{
+          
+          this.setState({toggleButton:res[0].value=='ON'})
+        })
+        .catch(console.log)
+  }
+
+  componentDidUpdate(){
+    console.log("runnging componentDidUpdate")
+  }
+
+  componentWillUnmount(){
+    console.log("mqtt disconnecting")
+  }
   render() {
     const { route,navigation, settings } = this.props;
     
@@ -59,7 +88,9 @@ class Light extends Component {
               offColor="#BEBEBE"
               labelStyle={{ color: "black", fontWeight: "900" }}
               size="large"
-              onToggle={isOn => this.setState({toggleButton:isOn}) }
+              onToggle={isOn => {
+                this.clickToggle(isOn?"ON":"OFF")
+                this.setState({toggleButton:isOn})} }
               />
             </Block>
             

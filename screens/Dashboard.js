@@ -76,7 +76,7 @@ class Dashboard extends Component {
     
 }
   subscribeTopics (client) {
-    console.log(client)
+    // console.log(client)
     client.subscribe(`${this.state.adaUsername}/feeds/temp`)
     client.subscribe(`${this.state.adaUsername}/feeds/light`)
     client.subscribe(`${this.state.adaUsername}/feeds/pump`)
@@ -178,9 +178,9 @@ class Dashboard extends Component {
     // this.props.navigation.addListener('willFocus', this.load)
 
   }
-  componentDidUpdate(){
-    console.log("runnging componentDidUpdate")
-  }
+  // componentDidUpdate(){
+  //   console.log("runnging componentDidUpdate")
+  // }
 
   // componentWillUnmount(){
   //   mqtt_disconnect(this.state.client)
@@ -238,7 +238,7 @@ class Dashboard extends Component {
             <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
             <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => {navigation.navigate('Light')
+                onPress={() => {navigation.navigate('Light',{username:this.state.adaUsername, password:this.state.adaPassword})
                 console.log(this.state.uid)}}
               >
                 <Block style={styles.button}>
@@ -267,7 +267,7 @@ class Dashboard extends Component {
               
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('Pump')}
+                onPress={() => navigation.navigate('Pump',{username:this.state.adaUsername, password:this.state.adaPassword})}
                 
               >
                 <Block style={styles.button}>
@@ -323,7 +323,7 @@ class Dashboard extends Component {
               <TouchableOpacity
     
     activeOpacity={0.8}
-                onPress={() => navigation.navigate('Fan')}
+                onPress={() => navigation.navigate('Fan',{username:this.state.adaUsername, password:this.state.adaPassword})}
               >
                 <Block style={styles.button}>
                 <ToggleSwitch style = {styles.left_footer} 
