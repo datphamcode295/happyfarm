@@ -28,16 +28,16 @@ export default function App() {
       headerShown: false
     }}>
       
+      {/* <Stack.Screen name="Login" component={LoginScreen}/> */}
+      <Stack.Screen name="Home Page" component={Dashboard}/>
       
-      <Stack.Screen name="Dashboard" component={Dashboard}/>
+      {/* <Stack.Screen name="Dashboard" component={Dashboard}/> */}
       <Stack.Screen name="Routine" component={Routine}/>
       <Stack.Screen name="Light" component={Light}/>
       <Stack.Screen name="Pump" component={Pump}/>
       <Stack.Screen name="Fan" component={Fan}/>
       <Stack.Screen name="RoutineScreen" component={RoutineScreen}/>
       <Stack.Screen name="Testing" component={Testing}/>
-      <Stack.Screen name="Login" component={LoginScreen}/>
-      <Stack.Screen name="Home Page" component={Dashboard}/>
       <Stack.Screen name="Temperature" component={Temperature}/>
       <Stack.Screen name="Humidity" component={Humidity}/>
       {/* <Stack.Screen name="Routine" component={RoutineScreen}/> */}
