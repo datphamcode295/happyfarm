@@ -39,7 +39,7 @@ export default function Temperature() {
 
   return (
     
-    <SafeAreaView style={styles.dashboard}>
+    <ScrollView style={styles.dashboard}>
         
         <Block style={styles.container}>
         <Text style={styles.headerText}> Temperature </Text>
@@ -117,7 +117,7 @@ export default function Temperature() {
       </View>
     
       </Block>
-    </SafeAreaView>
+    </ScrollView>
    
   );
 }
@@ -175,7 +175,8 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: theme.sizes.base,
         marginBottom: -theme.sizes.base * 4,
-        marginTop:-10
+        marginTop:-10,
+        marginBottom:5
       },
 
     header:{

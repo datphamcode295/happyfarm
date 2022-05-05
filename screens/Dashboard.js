@@ -33,6 +33,10 @@ class Dashboard extends Component {
       client:'',
     };
     this.handletemp = this.handletemp.bind(this)
+    this.handledoor = this.handledoor.bind(this)
+    this.handlefan = this.handlefan.bind(this)
+    this.handlelight = this.handlelight.bind(this)
+    this.handlepump = this.handlepump.bind(this)
     this.subscribeTopics = this.subscribeTopics.bind(this)
     this.onMessage = this.onMessage.bind(this)
     this.switchSetState = this.switchSetState.bind(this)
@@ -44,13 +48,29 @@ class Dashboard extends Component {
   handletemp(temp){
     this.setState({temp:temp})
   }
+  handlelight(lightstatus){
+    this.setState({lightButton:lightstatus=='ON'})
+  }
+  handlepump(pumpstatus){
+    this.setState({pumpButton:pumpstatus=='ON'})
+  }
+  handledoor(doorstatus){
+    this.setState({doorButton:doorstatus=='ON'})
+  }
+  handlefan(fanstatus){
+    this.setState({fanButton:fanstatus=='ON'})
+  }
 
   subscribeTopics (client) {
-    client.subscribe("vandat2000/feeds/temp");
+    client.subscribe("vandat2000/feeds/temp")
+    client.subscribe("vandat2000/feeds/light")
+    client.subscribe("vandat2000/feeds/pump")
+    client.subscribe("vandat2000/feeds/door")
+    client.subscribe("vandat2000/feeds/fan")
     
     // console.log("state : ", this)
   
-    console.log("Subscribed to topics");
+    console.log("Subscribed to topics")
   }
 
   onMessage(message) {
@@ -61,7 +81,24 @@ class Dashboard extends Component {
           console.log("message : ", message)
           console.log("message.payloadString : ", message.payloadString)
           this.handletemp(parseFloat(message.payloadString))
-          // this.setState({temp:34})
+          break
+        case "vandat2000/feeds/light":
+          
+          this.handlelight((message.payloadString))
+          break
+        case "vandat2000/feeds/pump":
+
+          this.handlepump((message.payloadString))
+          break
+
+        case "vandat2000/feeds/door":
+
+          this.handledoor((message.payloadString))
+          break
+        case "vandat2000/feeds/fan":
+          this.handlefan((message.payloadString))
+          break
+ 
     };
   }
 
@@ -69,57 +106,62 @@ class Dashboard extends Component {
     switch (topic) {
       case 'light':
         this.setState({lightButton:status=='ON'})
-        break;
+        break
       case 'pump':
         this.setState({pumpButton:status=='ON'})
-        break;
+        break
       case 'fan':
         this.setState({fanButton:status=='ON'})
-        break; 
+        break
       case 'door':
         this.setState({doorButton:status=='ON'})
-        break;   
+        break
+      case 'temp':
+          this.setState({temp:status})
+          break
       default:
-        break;
+        break
     }
   }
-  load(){
-    console.log("loading...")
-  }
+  // load = ()=>{
+  //   console.log("loading...")
+  // }
   componentDidMount(){
     console.log("run componentDidMount")
 
     const link = `http://10.0.2.2:8081/user?userid=${this.state.uid}`
     fetch(link).then(res=>res.json())
     .then(res=>{
-      console.log("got mongodata")
+      // console.log("got mongodata")
       this.setState({adaPassword:res.adaPassword, adaUsername:res.adaUsername})
     })
     .then(res=>{
-      const listTopics = ['light', 'pump', 'fan', 'door']
+      const listTopics = ['light', 'pump', 'fan', 'door','temp']
       for(let i =0; i< listTopics.length; i++){
         const adalink = `https://io.adafruit.com/api/v2/${this.state.adaUsername}/feeds/${listTopics[i]}/data?X-AIO-Key=${this.state.adaPassword}`
         fetch(adalink).then(res=>res.json())
         .then(res=>{
-          console.log("got ada data")
-          console.log(res[0].value)
+          // console.log("got ada data")
+          // console.log(res[0].value)
           this.switchSetState(listTopics[i],res[0].value)
         })
         .catch(console.log)
       }
+
+      try{
+        this.setState({client:mqtt_connect(this.onMessage, this.subscribeTopics,this.state.uid)}) 
+   
+       }
+       catch(error){
+         // console.log(error)
+       }
     })
     .catch(console.log)
     // https://617bd868d842cf001711c0fe.mockapi.io/item2
 
-    try{
-     this.setState({client:mqtt_connect(this.onMessage, this.subscribeTopics)}) 
+    
 
-    }
-    catch(error){
-      // console.log(error)
-    }
-
-    this.props.navigation.addListener('willFocus', this.load)
+    // this.props.navigation.addListener('willFocus', this.load)
 
   }
   componentDidUpdate(){
