@@ -22,6 +22,7 @@ class Dashboard extends Component {
     super();
     this.state = {
       temp:30,
+      humiddata:[],
       lightButton:false,
       fanButton:false,
       pumpButton:false,
@@ -159,8 +160,23 @@ class Dashboard extends Component {
           // console.log(res[0].value)
           this.switchSetState(listTopics[i],res[0].value)
         })
-        .catch(console.log)
+
+        
+
       }
+      
+        const adalink = `https://io.adafruit.com/api/v2/${this.state.adaUsername}/feeds/humid/data?X-AIO-Key=${this.state.adaPassword}`
+        fetch(adalink).then(res=>res.json())
+        .then(res=>{
+          let newdata = []
+          for(let i =6;i>=0;i--){
+            newdata.push(parseFloat(res[i].value))
+          }
+          this.setState({humiddata:newdata})
+
+        })
+        .catch(console.log)
+    
 
       try{
         this.setState({client:mqtt_connect(this.onMessage, this.subscribeTopics,this.state.uid)}) 
@@ -223,7 +239,7 @@ class Dashboard extends Component {
             <LineChart
               yMax={100}
               yMin={0}
-              data={[0, 20, 25, 15, 20, 55, 60]}
+              data={this.state.humiddata}
               style={{ flex: 0.8 }}
               curve={shape.curveNatural}
               svg={{ stroke: theme.colors.accent, strokeWidth: 3 }}
@@ -350,7 +366,7 @@ class Dashboard extends Component {
             <Block row space="around" style={{ marginVertical: theme.sizes.base }}>
             <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('Temperature')}
+                onPress={() => navigation.navigate('Temperature',{username:this.state.adaUsername, password:this.state.adaPassword,uid:this.state.uid})}
               >
                 <Block center middle style={styles.button}>
                   <TempIcon size={38} />
@@ -364,7 +380,7 @@ class Dashboard extends Component {
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('Humidity')}
+                onPress={() => navigation.navigate('Humidity',{username:this.state.adaUsername, password:this.state.adaPassword,uid:this.state.uid})}
               >
                 <Block center middle style={styles.button}>
                   <HumidIcon size={38} />

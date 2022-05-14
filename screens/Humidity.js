@@ -1,19 +1,72 @@
-import React from 'react';
-import { StyleSheet, Text, View, ScrollView,SafeAreaView, TextInput } from 'react-native';
-import * as theme from '../theme';
-import { Block } from '../components';
-import mocks from '../settings';
-// import { LineChart, Path } from 'react-native-svg-charts';
-import * as shape from 'd3-shape';
-import {LineChart} from "react-native-chart-kit";
+import React, {useEffect, useState } from 'react'
+import { StyleSheet, Text, View, ScrollView,SafeAreaView, TextInput } from 'react-native'
+import * as theme from '../theme'
+import { Block } from '../components'
+import mocks from '../settings'
+import * as shape from 'd3-shape'
+import {LineChart} from "react-native-chart-kit"
 
-export default function Humidity() {
+export default function Humidity(props) {
+
+  const [humid, setHumid] = useState(0)
+  const [humiddata, setHumiddata] = useState([0,0,0,0,0,0])
+
+  const [inputdate, setInputdate] = React.useState("")
+  const [inputcvv, setInputcvv] = React.useState("")
+
+  useEffect(async()=>{
+    const link = `http://10.0.2.2:8081/user?userid=${props.route.params.uid}`
+    console.log(link)
+    const adalink = `https://io.adafruit.com/api/v2/${props.route.params.username}/feeds/humid/data?X-AIO-Key=${props.route.params.password}`
+    try{
+      fetch(adalink).then(res=>res.json())
+            .then(res=>{
+              let dataArr = []
+              for(let i = 5;i>=0;i--){
+                dataArr.push(parseFloat(res[i].value))
+              }
+              setHumiddata(dataArr)
+              setHumid(res[0].value)
+        })
+      await fetch(link)
+              .then(res=>res.json())
+              .then(res=>{
+                setInputdate(parseFloat(res.upperboundhumid))
+                setInputcvv(parseFloat(res.lowerboundhumid))
+              })    
+
+    }catch(err){console.log("err in fetching humid ", err)}
+  },[])
+
+  const updateLowerHumid = (newvalue)=>{
+    const link = `http://10.0.2.2:8081/user/lowerhumid/${props.route.params.uid}`
+    fetch(link, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({value:newvalue})
+    }).then(res=>console.log("update lower humid : ", newvalue))
+  }
+
+  const updateUpperHumid = (newvalue)=>{
+    const link = `http://10.0.2.2:8081/user/upperhumid/${props.route.params.uid}`
+    fetch(link, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({value:newvalue})
+    }).then(res=>console.log("update upper humid : ", newvalue))
+  }
 
   const data = {
     labels: ["1am", "2am", "3am", "4am", "5am", "6am"],
     datasets: [
       {
-        data: [20, 30, 45, 27, 30, 43],
+        data: humiddata,
         color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
         strokeWidth: 2 // optional
       }
@@ -32,8 +85,7 @@ export default function Humidity() {
     useShadowColorFromDataset: false // optional
   };
 
-  const [inputdate, setInputdate] = React.useState("")
-  const [inputcvv, setInputcvv] = React.useState("")
+
 
   return (
     <ScrollView style={styles.dashboard}>
@@ -43,7 +95,7 @@ export default function Humidity() {
         <Block style={styles.CircleShape}>
           <View style={styles.container_inside}>
             
-            <Text style={{ fontWeight: "bold",fontSize: 70, color: "#17921f"}}>34</Text>
+            <Text style={{ fontWeight: "bold",fontSize: 70, color: "#17921f"}}>{humid}</Text>
             
           </View>
         </Block>
@@ -64,13 +116,10 @@ export default function Humidity() {
 
       <View style={styles.row}>
         <View style={styles.inputWrap}>
-          <Text style={styles.label} >Lower bound</Text>
-          <TextInput style={styles.inputdate} onChangeText = {(text) => setInputdate(text)}
-          onSubmitEditing ={() => {
-            alert(`Lower bound degree is: ${inputdate}`);
-            setInputdate("");
-          }}
-          valueLB = {inputdate}
+          <Text style={styles.label} >Lower bound: {inputcvv}</Text>
+          <TextInput style={styles.inputdate} onChangeText = {(text) => setInputcvv(text)}
+          onSubmitEditing ={() => updateLowerHumid(inputcvv)}
+          valueLB = {inputcvv}
           clearButtonMode="always"
           placeholder = "Input here"
           placeholderTextColor="rgba(0, 128, 0, 0.3)" 
@@ -82,14 +131,11 @@ export default function Humidity() {
         </View>
 
         <View style={styles.inputWrap}>
-          <Text style={styles.label}>Upper bound</Text>
+          <Text style={styles.label}>Upper bound: {inputdate}</Text>
           <TextInput style={styles.inputcvv} maxLength={17} 
-          onChangeText = {(text) => setInputcvv(text)}
-          onSubmitEditing ={() => {
-            alert(`Upper bound degree is: ${inputcvv}`);
-            setInputcvv("");
-          }}
-          valueUB = {inputcvv}
+          onChangeText = {(text) => setInputdate(text)}
+          onSubmitEditing ={() => updateUpperHumid(inputdate)}
+          valueUB = {inputdate}
           clearButtonMode="always"
           placeholder = "Input here"
           placeholderTextColor="rgba(0, 128, 0, 0.3)" 
