@@ -339,7 +339,7 @@ class Dashboard extends Component {
               <TouchableOpacity
     
     activeOpacity={0.8}
-                onPress={() => navigation.navigate('Fan',{username:this.state.adaUsername, password:this.state.adaPassword})}
+                onPress={() => navigation.navigate('Fan',{username:this.state.adaUsername, password:this.state.adaPassword, uid:this.state.uid})}
               >
                 <Block style={styles.button}>
                 <ToggleSwitch style = {styles.left_footer} 

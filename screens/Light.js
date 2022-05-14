@@ -108,7 +108,7 @@ class Light extends Component {
             
             
              <Block flex={1} column >
-               <RoutineScreen/>
+               <RoutineScreen topic="light" uid={this.props.route.params.uid}/>
                </Block>
                
               

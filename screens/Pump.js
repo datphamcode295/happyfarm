@@ -102,7 +102,7 @@ class Pump extends Component {
           
             
              <Block flex={1} column >
-               <RoutineScreen/>
+               <RoutineScreen topic="pump" uid={this.props.route.params.uid}/>
                </Block>
           
 

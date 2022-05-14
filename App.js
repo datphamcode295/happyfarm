@@ -28,7 +28,7 @@ export default function App() {
       headerShown: false
     }}>
       
-      {/* <Stack.Screen name="Login" component={LoginScreen}/> */}
+      <Stack.Screen name="Login" component={LoginScreen}/>
       <Stack.Screen name="Home Page" component={Dashboard}/>
       
       {/* <Stack.Screen name="Dashboard" component={Dashboard}/> */}

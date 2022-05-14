@@ -101,7 +101,7 @@ class Fan extends Component {
           
            
              <Block flex={1} column >
-               <RoutineScreen/>
+               <RoutineScreen topic="fan" uid={this.props.route.params.uid}/>
                </Block>
              
 

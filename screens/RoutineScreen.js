@@ -3,30 +3,54 @@ import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput,Button, Touchab
 import Task from '../components/Task';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-export default function RoutineScreen() {
+export default function RoutineScreen(props) {
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
   
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-  const [text, setText] = useState('');
+  const [text, setText] = useState('');//date in int
 
+
+
+
+  const updateRoutine = ()=>{
+    console.log(props)
+    const link = `http://10.0.2.2:8081/routine`
+    fetch(link, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userid:props.uid,
+      time: parseInt(text),
+      device: props.topic,
+      status: "ON"})
+    }).then(console.log)
+    .catch(console.log)
+  }
   const handleAddTask = () => {
     Keyboard.dismiss();
     setTaskItems([...taskItems, task])
     setTask(null);
+    updateRoutine(text)
   }
 
   const completeTask = (index) => {
     let itemsCopy = [...taskItems];
     itemsCopy.splice(index, 1);
     setTaskItems(itemsCopy)
+    
+    
+
   }
   const onChange = (event, selectedDate) =>{
     const currentDate = selectedDate || date;
     setShow(Platform.OS ==='ios');
     setDate(currentDate);
+    console.log(props)
 
     let tempDate = new Date(currentDate);
     let fDate  = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
@@ -35,6 +59,7 @@ export default function RoutineScreen() {
     setText(fDate + '\n' + fTime)
     setText(tempDate.getTime())
     console.log(fDate + '(' + fTime + ')')
+    console.log(text)
     setTask(fDate+ ' _ ' + fTime)
     
 }
